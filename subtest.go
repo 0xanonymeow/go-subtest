@@ -12,6 +12,7 @@ type Subtest struct {
 	ExpectedErr  error
 	Test         func() (interface{}, error)
 	Setup        func()
+	Teardown     func()
 }
 
 func RunSubtests(t *testing.T, subtests []Subtest) {
@@ -47,6 +48,10 @@ func RunSubtests(t *testing.T, subtests []Subtest) {
 
 			t.Cleanup(func() {
 				os.Clearenv()
+
+				if subtest.Teardown != nil {
+					subtest.Teardown()
+				}
 			})
 		})
 	}

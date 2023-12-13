@@ -32,6 +32,9 @@ func RunSubtests(t *testing.T, subtests []Subtest) {
 					!reflect.DeepEqual(result, subtest.ExpectedData) {
 					t.Errorf("expected (%v), got (%v)", subtest.ExpectedData, result)
 				}
+			} else if valueType != nil && (valueType.Kind() == reflect.Struct &&
+				!reflect.DeepEqual(result, subtest.ExpectedData)) {
+				t.Errorf("expected (%v), got (%v)", subtest.ExpectedData, result)
 			} else {
 				if result != subtest.ExpectedData {
 					t.Errorf("expected (%v), got (%v)", subtest.ExpectedData, result)

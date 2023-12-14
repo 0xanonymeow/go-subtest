@@ -1,6 +1,7 @@
 package subtest
 
 import (
+	"fmt"
 	"os"
 	"reflect"
 	"testing"
@@ -35,6 +36,10 @@ func RunSubtests(t *testing.T, subtests []Subtest) {
 				}
 			} else if valueType != nil && (valueType.Kind() == reflect.Struct) {
 				if !reflect.DeepEqual(result, subtest.ExpectedData) {
+					t.Errorf("expected (%v), got (%v)", subtest.ExpectedData, result)
+				}
+			} else if valueType != nil && valueType.Kind() == reflect.Map {
+				if fmt.Sprint(result) != fmt.Sprint(subtest.ExpectedData) {
 					t.Errorf("expected (%v), got (%v)", subtest.ExpectedData, result)
 				}
 			} else {

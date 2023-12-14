@@ -14,6 +14,10 @@ func TestSubtest(t *testing.T) {
 		Name: "John",
 		Age:  30,
 	}
+	sampleMap := map[string]interface{}{
+		"name": "John",
+		"age":  30,
+	}
 
 	subtests := []Subtest{
 		{
@@ -21,7 +25,25 @@ func TestSubtest(t *testing.T) {
 			ExpectedData: sampleStruct,
 			ExpectedErr:  nil,
 			Test: func() (interface{}, error) {
-				return sampleStruct, nil
+				compareStruct := SampleStruct{
+					Name: "John",
+					Age:  30,
+				}
+
+				return compareStruct, nil
+			},
+		},
+		{
+			Name:         "map_compare",
+			ExpectedData: sampleMap,
+			ExpectedErr:  nil,
+			Test: func() (interface{}, error) {
+				compareMap := map[string]interface{}{
+					"name": "John",
+					"age":  30,
+				}
+
+				return compareMap, nil
 			},
 		},
 	}
